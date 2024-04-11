@@ -1,0 +1,50 @@
+plugins {
+    id "java"
+    alias(gradlePluginLibs.plugins.spring.boot)
+    alias(gradlePluginLibs.plugins.spring.dependency.management)
+    alias(gradlePluginLibs.plugins.docker.compose)
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation libs.spring.boot.starter.web,
+        libs.spring.boot.starter.actuator,
+        libs.spring.boot.starter.data.jpa,
+        libs.liquibase.core,
+        libs.postgresql
+
+    compileOnly libs.lombok
+
+    annotationProcessor libs.lombok
+
+    testImplementation testLibs.spring.boot.starter.test,
+        testLibs.spring.boot.testcontainers,
+        testLibs.testcontainers.junit,
+        testLibs.testcontainers.postgresql
+}
+
+tasks.named("test") {
+    useJUnitPlatform()
+}
+
+dockerCompose {
+    projectName = "carpark"
+    captureContainersOutput = true
+    postgres {
+        projectName = "carpark"
+        startedServices = ['postgres']
+    }
+}

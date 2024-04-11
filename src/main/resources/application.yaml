@@ -1,0 +1,19 @@
+spring.application.name: carpark-app
+
+logging:
+  level:
+    root: INFO
+    com.wego: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/carpark
+    username: carpark
+    password: carpark@
+
+  liquibase:
+    enabled: false
+
+spring.datasource.hikari.initializationFailTimeout: 60000

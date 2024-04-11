@@ -1,0 +1,42 @@
+version: "2.4"
+
+services:
+  carpark:
+    image: ${SERVER_IMAGE:-carpark:0.0.1-SNAPSHOT}
+    container_name: carpark_server
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - carpark_compose
+    ports:
+      - 8080:8080
+
+  postgres:
+    image: postgres:15.3
+    container_name: carpark_postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: carpark@
+      POSTGRES_USER: carpark
+      POSTGRES_DB: carpark
+    healthcheck:
+#       Checks whether Postgres is ready.
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready --username carpark --dbname carpark",
+        ]
+      interval: 2s
+      timeout: 5s
+      retries: 60
+    networks:
+      - carpark_compose
+
+networks:
+  carpark_compose:
+    driver: bridge
+

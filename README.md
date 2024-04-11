@@ -6,4 +6,4 @@ For more details, please read it at [pdf](./Senior%20Software%20Engineer%20Codin
 
 ## Analysis
 
-Please read the [analysis](./ANALYSIS.md) to have a better understanding of the system design.
+Please read the [analysis](./docs/ANALYSIS.md) to have a better understanding of the system design.
