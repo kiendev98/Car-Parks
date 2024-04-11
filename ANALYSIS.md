@@ -34,17 +34,22 @@ Here we follow the basic [Hexagonal architecture](https://en.wikipedia.org/wiki/
 ![System Design](system_design.svg)
 
 - Inbound adapter:
-  - `LiquibaseCarParkMigration`: In charge of migrating car park information from cvs file to database.
+  - `LiquibaseCarParkMigrator`: In charge of migrating car park information from cvs file to database.
+    - `LatLonCoordinateConverter`: Convert SVY21 coordinate format to lat/long coordinate system.
   - `CarParkController`: Serve `findNearestCarParks()` operation as REST endpoint.
 - Business logic:
   - `CarParkService`: Where all system operation is implemented.
-  - `DistanceComputer`: Abstract for compute distance between 2 coordinate.
+  - `DistanceComputer`: Abstraction for compute distance between 2 coordinate.
   - `CarParkAvailabilityClient`: Abstraction for querying car parks availability;
-  - `CarParkRepository`: Abstract for car parks persistence 
+  - `CarParkRepository`: Abstraction for car parks persistence 
 - Outbound adapter:
   - `SpringJpaCarParkRepository`: a DAO implementation provided by Spring JPA.
   - `EquirectangularDistanceComputer`: Distance computation based on Equirectangular Distance Approximation formula.
   - `SingaporeCarParkAvailiabilityClient`: Client that queries data from Singapore government data source. 
+
+>**NOTE**: The converting from SVY21 to lat/long coordinate algorithm could be found [here](https://github.com/cgcai/SVY21).
+> Since this library is not published on maven artifactory and the source code has only few classes, we will copy
+> the whole library source code to our application.
 
 ### Performance 
 
@@ -76,7 +81,7 @@ There are various algorithm that supports us to calculate the distance between t
 | **Vincenty’s Formula**                     | Very accurate when calculating long distance     | Compute-heavy formula, very slow compared to other formula mentioned above |
 
 Based on the business requirements, all car parks are located in Singapore. There would be no need for long distance computation, beside this is real-time computation (every minute),
-performance would be the first thing to prioritize when selecting computation formula.
+performance should be the first thing to prioritize when selecting computation formula.
 
 See this article for more details: https://www.baeldung.com/java-find-distance-between-points
 

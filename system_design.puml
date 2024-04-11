@@ -6,23 +6,22 @@ frame "domain" {
 }
 
 frame "data transfer object" {
-    class CarParkAvailability {
-
-    }
+    class CarParkAvailability
+    class NearestCarParkResponse
 }
 
 frame "system interaction" {
     class CarParkController {
-        + List<CarPark> findNearestCarParks(Coordinate coordinate)
+        + List<NearestCarParkResponse> findNearestCarParks(Coordinate coordinate, Pageable  pageable)
     }
 
     interface CarParkService {
-        + List<CarPark> findNearestCarParks(Coordinate coordinate)
+        + List<CarPark> findNearestCarParks(Coordinate coordinate, Pageable pageable)
         + List<CarPark> saveCarParks(CarPark carParks)
     }
 
     class DefaultCarParkService {
-        + List<CarPark> findNearestCarParks(Coordinate coordinate)
+        + List<CarPark> findNearestCarParks(Coordinate coordinate, Pageable pageable)
         + List<CarPark> saveCarParks(CarPark carParks)
     }
 
@@ -41,7 +40,11 @@ frame "system interaction" {
     }
 
     class LiquibaseCarParkMigrator {
-        + void migrate()
+        + void execute()
+    }
+
+    class LatLonCoordinateConvert {
+        + LatLonCoordinate computeSVY21(SVY21Coordinate svy21)
     }
 
     interface CarParkAvailabilityClient {
@@ -67,4 +70,5 @@ DefaultCarParkService --* DistanceComputer
 DistanceComputer <|-- EquirectangularDistanceComputer
 CarParkRepository <|-- SpringJpaCarParkRepository
 CarParkAvailabilityClient <|-- SingaporeCarParkAvailabilityClient
+LiquibaseCarParkMigrator --* LatLonCoordinateConvert
 @enduml
