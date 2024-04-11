@@ -1,0 +1,14 @@
+@startuml domain
+class CarPark {
+    String id
+    String address
+    Coordinate coordinate
+}
+
+class Coordinate {
+    double longitude
+    double latitude
+}
+
+CarPark --* Coordinate
+@enduml

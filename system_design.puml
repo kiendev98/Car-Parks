@@ -1,0 +1,70 @@
+@startuml system_design
+top to bottom direction
+
+frame "domain" {
+    !include domain.puml
+}
+
+frame "data transfer object" {
+    class CarParkAvailability {
+
+    }
+}
+
+frame "system interaction" {
+    class CarParkController {
+        + List<CarPark> findNearestCarParks(Coordinate coordinate)
+    }
+
+    interface CarParkService {
+        + List<CarPark> findNearestCarParks(Coordinate coordinate)
+        + List<CarPark> saveCarParks(CarPark carParks)
+    }
+
+    class DefaultCarParkService {
+        + List<CarPark> findNearestCarParks(Coordinate coordinate)
+        + List<CarPark> saveCarParks(CarPark carParks)
+    }
+
+    interface CarParkRepository {
+        + List<CarPark> findByIds(List<String> ids)
+        + List<CarPark> saveAll(List<CarPark> carParks)
+    }
+
+    class SpringJpaCarParkRepository {
+        + List<CarPark> findByIds(List<String> ids)
+        + List<CarPark> saveAll(List<CarPark> carParks)
+    }
+
+    interface DistanceComputer {
+        + double computeInMeter(Coordinate from, Coordinate to)
+    }
+
+    class LiquibaseCarParkMigrator {
+        + void migrate()
+    }
+
+    interface CarParkAvailabilityClient {
+        + CarParkAvailability fetchAvailabilityCarPark();
+    }
+
+    class SingaporeCarParkAvailabilityClient  {
+        + CarParkAvailability fetchAvailabilityCarPark();
+    }
+
+    class EquirectangularDistanceComputer {
+        + double computeInMeter(Coordinate from, Coordinate to)
+    }
+}
+
+
+CarParkController --* CarParkService
+CarParkService <|-- DefaultCarParkService
+LiquibaseCarParkMigrator --* CarParkService
+DefaultCarParkService --* CarParkRepository
+DefaultCarParkService --* CarParkAvailabilityClient
+DefaultCarParkService --* DistanceComputer
+DistanceComputer <|-- EquirectangularDistanceComputer
+CarParkRepository <|-- SpringJpaCarParkRepository
+CarParkAvailabilityClient <|-- SingaporeCarParkAvailabilityClient
+@enduml
