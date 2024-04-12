@@ -45,7 +45,7 @@ Here we follow the basic [Hexagonal architecture](https://en.wikipedia.org/wiki/
 - Outbound adapter:
   - `SpringJpaCarParkRepository`: a DAO implementation provided by Spring JPA.
   - `EquirectangularDistanceComputer`: Distance computation based on Equirectangular Distance Approximation formula.
-  - `SingaporeCarParkAvailiabilityClient`: Client that queries data from Singapore government data source. 
+  - `SingaporeCarParkAvailabilityClient`: Client that queries data from Singapore government data source. 
 
 >**NOTE**: The converting from SVY21 to lat/long coordinate algorithm could be found [here](https://github.com/cgcai/SVY21).
 > Since this library is not published on maven artifactory and the source code has only few classes, we will copy
@@ -55,18 +55,18 @@ Here we follow the basic [Hexagonal architecture](https://en.wikipedia.org/wiki/
 
 Since the operation `findNearestCarParks()` serves real-time data for customer, and it also queries a large volume of data from external source, this could be a bottleneck of the application when it comes to performance topic.
 
-**Cache `findNearestCarParks()` operation.**
+**Cache `SingaporeCarParkAvailabilityClient#fetchAvailabilityCarParks()` query.**
 
-This is a query operation, data consistency would not be the problem here. It's reasonable to cache this operation.
+This is a query, data consistency would not be the problem here. It's reasonable to cache this query.
 
-Based on the recommendation from the [car parks avalibity datasource](https://beta.data.gov.sg/collections/85/view) website, `1 minues` cache expiration would be a good setting.
+Based on the recommendation from the [car parks availability datasource](https://beta.data.gov.sg/collections/85/view) website, `1 minues` cache expiration would be a good setting.
 
 **Algorithm & Data Structure for `findNearestCarParks()` operation**
 
 The size of computed source for car park availability would be approximately `300000` records.
-This is not really a big number for a single instance application to compute the distance of a specific coordinate against `300000` **in parallel** then do the sorting to find the nearest records.
+If the size exceeds a million records, more complex architecture would be required such as `push-model`. But this is not really a big number for a single instance application to compute the distance of a specific coordinate against `300000` **in parallel** then do the sorting to find the nearest records.
 
-Specially data structure or algorithm could be overkilled in this situation.
+For this main reason, special data structure, algorithm & design could be overkilled in this situation.
 
 See this discussion for more details: https://gis.stackexchange.com/questions/4846/algorithm-to-find-nearest-point
 
