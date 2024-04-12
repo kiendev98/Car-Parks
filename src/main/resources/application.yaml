@@ -12,8 +12,18 @@ spring:
     url: jdbc:postgresql://localhost:5432/carpark
     username: carpark
     password: carpark@
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: validate
 
   liquibase:
-    enabled: false
+    change-log: database/project_model.xml
+    parameters:
+      csvFilePath: file:${PWD}/HDBCarparkInformation.csv
+      # TODO: Remove it
+    drop-first: true
+
 
 spring.datasource.hikari.initializationFailTimeout: 60000

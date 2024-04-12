@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"
+				   logicalFilePath="database/project_model.xml">
+	<changeSet id="initial" author="kttran">
+		<createTable tableName="car_park">
+			<column name="id" type="varchar(100)">
+				<constraints primaryKey="true" primaryKeyName="cark_park_pk" nullable="false" />
+			</column>
+			<column name="address" type="varchar(100)"/>
+			<column name="latitude" type="double"/>
+			<column name="longitude" type="double"/>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="data_migration" author="kttran">
+		<customChange class="com.wego.interview.carpark.migration.LiquibaseCarParkMigrator" >
+			<param name="csvFilePath" value="${csvFilePath}"/>
+		</customChange>
+	</changeSet>
+</databaseChangeLog>

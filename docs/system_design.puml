@@ -10,6 +10,17 @@ frame "data transfer object" {
     class NearestCarParkResponse
 }
 
+frame "data migration" {
+    class LiquibaseCarParkMigrator {
+        + void execute()
+    }
+
+
+    class LatLonCoordinateConvert {
+        + LatLonCoordinate computeSVY21(SVY21Coordinate svy21)
+    }
+}
+
 frame "system interaction" {
     class CarParkController {
         + List<NearestCarParkResponse> findNearestCarParks(Coordinate coordinate, Pageable  pageable)
@@ -39,13 +50,6 @@ frame "system interaction" {
         + double computeInMeter(Coordinate from, Coordinate to)
     }
 
-    class LiquibaseCarParkMigrator {
-        + void execute()
-    }
-
-    class LatLonCoordinateConvert {
-        + LatLonCoordinate computeSVY21(SVY21Coordinate svy21)
-    }
 
     interface CarParkAvailabilityClient {
         + CarParkAvailability fetchAvailabilityCarPark();
@@ -63,7 +67,6 @@ frame "system interaction" {
 
 CarParkController --* CarParkService
 CarParkService <|-- DefaultCarParkService
-LiquibaseCarParkMigrator --* CarParkService
 DefaultCarParkService --* CarParkRepository
 DefaultCarParkService --* CarParkAvailabilityClient
 DefaultCarParkService --* DistanceComputer

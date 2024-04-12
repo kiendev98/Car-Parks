@@ -31,6 +31,7 @@ Since this is very basic application, [transcription script pattern](https://mar
 
 Here we follow the basic [Hexagonal architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)) to design the system.
 
+//TODO: Update migration design
 ![System Design](system_design.svg)
 
 - Inbound adapter:

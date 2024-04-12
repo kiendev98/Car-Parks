@@ -24,7 +24,8 @@ dependencies {
         libs.spring.boot.starter.actuator,
         libs.spring.boot.starter.data.jpa,
         libs.liquibase.core,
-        libs.postgresql
+        libs.postgresql,
+        libs.jackson.csv
 
     compileOnly libs.lombok
 
@@ -36,7 +37,7 @@ dependencies {
         testLibs.testcontainers.postgresql
 }
 
-tasks.named("test") {
+test {
     useJUnitPlatform()
 }
 
