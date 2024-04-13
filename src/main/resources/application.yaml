@@ -15,6 +15,7 @@ spring:
   jpa:
     properties:
       hibernate:
+        open-in-view: false
         hbm2ddl:
           auto: validate
 

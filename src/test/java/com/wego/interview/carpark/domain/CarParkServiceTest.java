@@ -5,12 +5,11 @@ import com.wego.interview.carpark.domain.available.CarParkQueryService;
 import com.wego.interview.carpark.domain.carpark.CarPark;
 import com.wego.interview.carpark.domain.carpark.CarParkRepository;
 import com.wego.interview.carpark.domain.carpark.CarParkService;
+import com.wego.interview.carpark.domain.carpark.NearestCarParkPage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Coordinate;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +35,7 @@ class CarParkServiceTest {
     void testFindNearestCarParks() {
         // given
         AtomicInteger index = new AtomicInteger(1);
-        Pageable pageRequest = Pageable.unpaged();
+        NearestCarParkPage pageRequest = NearestCarParkPage.unpaged();
         Coordinate coordinate = new Coordinate(0, 0);
         List<String> availableCarParkIds = Arrays.asList("A1", "A2", "A3");
         List<AvailableCarPark> availableCarParks = availableCarParkIds.stream()
@@ -45,11 +44,8 @@ class CarParkServiceTest {
         List<CarPark> expectedCarParks = availableCarParks.stream()
                         .map(availableCarPark -> CarPark.builder().id(availableCarPark.getCarParkId()).build())
                         .toList();
-        Page<CarPark> carParkPageResult = mock(Page.class);
-
-        when(carParkPageResult.getContent()).thenReturn(expectedCarParks);
         when(carParkQueryService.findAvailableCarParks()).thenReturn(availableCarParks);
-        when(carParkRepository.findNearestCarParksInIds(coordinate, availableCarParkIds, pageRequest)).thenReturn(carParkPageResult);
+        when(carParkRepository.findNearestCarParksInIds(coordinate, availableCarParkIds, pageRequest)).thenReturn(expectedCarParks);
 
         // when
         List<CarPark> result = carParkService.findNearestAvailableCarParks(coordinate, pageRequest);

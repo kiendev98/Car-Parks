@@ -14,7 +14,7 @@
 		</createTable>
 	</changeSet>
 
-	<changeSet id="data_migration" author="kttran">
+	<changeSet id="data_migration" author="kttran" context="!test">
 		<customChange class="com.wego.interview.carpark.migration.LiquibaseCarParkMigrator" >
 			<param name="csvFilePath" value="${csvFilePath}"/>
 		</customChange>

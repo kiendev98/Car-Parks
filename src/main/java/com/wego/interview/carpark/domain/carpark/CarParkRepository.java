@@ -1,8 +1,6 @@
 package com.wego.interview.carpark.domain.carpark;
 
 import org.locationtech.jts.geom.Coordinate;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -15,9 +13,9 @@ public interface CarParkRepository {
      *
      * @param coordinate The central point to find nearest car parks.
      * @param carParkIds The list of car park ids for filtering
-     * @param pageable page request
+     * @param page The page request
      *
      * @return The paginated result.
      */
-    Page<CarPark> findNearestCarParksInIds(Coordinate coordinate, List<String> carParkIds, Pageable pageable);
+    List<CarPark> findNearestCarParksInIds(Coordinate coordinate, List<String> carParkIds, NearestCarParkPage page);
 }
