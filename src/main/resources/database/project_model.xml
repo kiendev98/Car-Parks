@@ -10,8 +10,7 @@
 				<constraints primaryKey="true" primaryKeyName="cark_park_pk" nullable="false" />
 			</column>
 			<column name="address" type="varchar(100)"/>
-			<column name="latitude" type="double"/>
-			<column name="longitude" type="double"/>
+			<column name="location" type="geometry(POINT, 4326)" />
 		</createTable>
 	</changeSet>
 

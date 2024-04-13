@@ -19,13 +19,17 @@ repositories {
     mavenCentral()
 }
 
+
 dependencies {
+
     implementation libs.spring.boot.starter.web,
         libs.spring.boot.starter.actuator,
         libs.spring.boot.starter.data.jpa,
+        libs.spring.cloud.open.feign,
         libs.liquibase.core,
         libs.postgresql,
-        libs.jackson.csv
+        libs.jackson.csv,
+        libs.hibernate.spatial
 
     compileOnly libs.lombok
 

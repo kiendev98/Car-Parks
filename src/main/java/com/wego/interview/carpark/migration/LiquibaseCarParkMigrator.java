@@ -1,20 +1,8 @@
 package com.wego.interview.carpark.migration;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.sql.PreparedStatement;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.lang3.time.StopWatch;
-
-import com.wego.interview.carpark.domain.CarPark;
-import com.wego.interview.carpark.domain.Coordinate;
+import com.wego.interview.carpark.domain.carpark.CarPark;
 import com.wego.interview.carpark.migration.svy21_copied.LatLonCoordinate;
 import com.wego.interview.carpark.migration.svy21_copied.SVY21;
-
 import liquibase.change.custom.CustomTaskChange;
 import liquibase.change.custom.CustomTaskRollback;
 import liquibase.database.Database;
@@ -27,12 +15,25 @@ import liquibase.resource.ResourceAccessor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.StopWatch;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.sql.PreparedStatement;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Liquibase custom change set to import data from csv file to database.
  */
 @Slf4j
 public class LiquibaseCarParkMigrator implements CustomTaskChange, CustomTaskRollback {
+
+	private final GeometryFactory geometryFactory = new GeometryFactory();
 
 	private ResourceAccessor resourceAccessor;
 
@@ -50,14 +51,20 @@ public class LiquibaseCarParkMigrator implements CustomTaskChange, CustomTaskRol
 
 			JdbcConnection con = (JdbcConnection) database.getConnection();
 			PreparedStatement prepareStatement = con.prepareStatement(
-				"insert into car_park (id, address, latitude, longitude) values (?, ?, ?, ?)"
+				"insert into car_park (id, address, location) values (?, ?, ST_GeomFromText(?, 4326))"
 			);
 
 			for (CarPark carPark : carParks) {
 				prepareStatement.setString(1, carPark.getId());
 				prepareStatement.setString(2, carPark.getAddress());
-				prepareStatement.setDouble(3, carPark.getCoordinate().getLatitude());
-				prepareStatement.setDouble(4, carPark.getCoordinate().getLongitude());
+				prepareStatement.setString(
+						3,
+						String.format(
+								"POINT(%f %f)",
+								carPark.getLocation().getX(),
+								carPark.getLocation().getY()
+						)
+				);
 
 				prepareStatement.addBatch();
 			}
@@ -76,11 +83,13 @@ public class LiquibaseCarParkMigrator implements CustomTaskChange, CustomTaskRol
 		return CarPark.builder()
 			.id(record.getCarParkNo())
 			.address(record.getAddress())
-			.coordinate(
-				Coordinate.builder()
-					.latitude(latLonCoordinate.getLatitude())
-					.longitude(latLonCoordinate.getLongitude())
-					.build()
+			.location(
+					geometryFactory.createPoint(
+							new Coordinate(
+									latLonCoordinate.getLongitude(),
+									latLonCoordinate.getLatitude()
+							)
+					)
 			)
 			.build();
 	}

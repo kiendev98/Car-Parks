@@ -21,9 +21,6 @@ spring:
   liquibase:
     change-log: database/project_model.xml
     parameters:
-      csvFilePath: file:${PWD}/HDBCarparkInformation.csv
-      # TODO: Remove it
-    drop-first: true
-
+      csvFilePath: classpath:/HDBCarparkInformation.csv
 
 spring.datasource.hikari.initializationFailTimeout: 60000

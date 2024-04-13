@@ -15,7 +15,7 @@ services:
       - 8080:8080
 
   postgres:
-    image: postgres:15.3
+    image: postgis/postgis:15-3.4
     container_name: carpark_postgres
     ports:
       - 5432:5432
