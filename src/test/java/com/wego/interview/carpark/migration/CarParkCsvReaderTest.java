@@ -18,7 +18,7 @@ public class CarParkCsvReaderTest {
 	private final CarParkCsvReader carParkCsvReader = new CarParkCsvReader();
 
 	@Test
-	public void readRecords() throws IOException {
+	void readRecords() throws IOException {
 		//given
 		String row1 = "A1,Test Address1,1.01,1.02";
 		String row2 = "A2,Test Address2,1.02,1.03";
@@ -47,7 +47,7 @@ public class CarParkCsvReaderTest {
 	}
 
 	@Test
-	public void readRecords_shouldIgnoreUnknownProperties() throws IOException {
+	void readRecords_shouldIgnoreUnknownProperties() throws IOException {
 		//given
 		String header = HEADER + ",extraRow1, extraRow2";
 		String row = "A1,Test Address1,1.01,1.02,extra1,extra2";
