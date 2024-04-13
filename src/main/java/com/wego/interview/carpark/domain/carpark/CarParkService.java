@@ -35,7 +35,6 @@ public class CarParkService {
                 .map(AvailableCarPark::getCarParkId)
                 .toList();
 
-
         return carParkRepository.findNearestCarParksInIds(coordinate, availableCarParkIds, page);
     }
 }

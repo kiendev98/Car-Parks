@@ -11,7 +11,7 @@
               "lots_available": "101"
             }
           ],
-          "carpark_number": "HE12",
+          "carpark_number": "A1",
           "update_datetime": "2024-04-13T22:05:05"
         },
         {
@@ -22,7 +22,7 @@
               "lots_available": "381"
             }
           ],
-          "carpark_number": "HLM",
+          "carpark_number": "A2",
           "update_datetime": "2024-04-13T22:05:08"
         },
         {
@@ -33,7 +33,7 @@
               "lots_available": "157"
             }
           ],
-          "carpark_number": "RHM",
+          "carpark_number": "A3",
           "update_datetime": "2024-04-13T22:05:05"
         },
         {
@@ -44,7 +44,7 @@
               "lots_available": "67"
             }
           ],
-          "carpark_number": "BM29",
+          "carpark_number": "A4",
           "update_datetime": "2024-04-13T22:04:57"
         },
         {
@@ -55,7 +55,7 @@
               "lots_available": "71"
             }
           ],
-          "carpark_number": "Q81",
+          "carpark_number": "A5",
           "update_datetime": "2024-04-13T22:04:59"
         }
       ]

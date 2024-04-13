@@ -54,15 +54,15 @@ class SingaporeCarParkAvailabilityClientIT {
         Assertions.assertThat(response.getItems().get(0).getCarParkData()).isNotEmpty();
         Assertions.assertThat(response.getItems().get(0).getCarParkData().get(0).getCarParkInfo()).isNotEmpty();
 
-        CarParkAvailabilityResponse.CarParkInfo HE12CarParkInfo = response.getItems().get(0).getCarParkData()
+        CarParkAvailabilityResponse.CarParkInfo A1CarPark = response.getItems().get(0).getCarParkData()
                 .stream()
-                .filter(data -> data.getCarParkNumber().equals("HE12"))
+                .filter(data -> data.getCarParkNumber().equals("A1"))
                 .findFirst()
                 .get()
                 .getCarParkInfo().get(0);
 
-        Assertions.assertThat(HE12CarParkInfo.getTotalLots()).isEqualTo(105);
-        Assertions.assertThat(HE12CarParkInfo.getLotsAvailable()).isEqualTo(101);
+        Assertions.assertThat(A1CarPark.getTotalLots()).isEqualTo(105);
+        Assertions.assertThat(A1CarPark.getLotsAvailable()).isEqualTo(101);
     }
 
     @Test
@@ -75,12 +75,12 @@ class SingaporeCarParkAvailabilityClientIT {
 
         // then
         Assertions.assertThat(availableCarParks).isNotEmpty();
-        AvailableCarPark HE12CarPark = availableCarParks.stream()
-                .filter(availableCarPark -> availableCarPark.getCarParkId().equals("HE12"))
+        AvailableCarPark A1CarPark = availableCarParks.stream()
+                .filter(availableCarPark -> availableCarPark.getCarParkId().equals("A1"))
                 .findFirst()
                 .get();
-        Assertions.assertThat(HE12CarPark.getTotalLots()).isEqualTo(105);
-        Assertions.assertThat(HE12CarPark.getAvailableLots()).isEqualTo(101);
+        Assertions.assertThat(A1CarPark.getTotalLots()).isEqualTo(105);
+        Assertions.assertThat(A1CarPark.getAvailableLots()).isEqualTo(101);
     }
 
     private void setupWireMock() throws IOException {
