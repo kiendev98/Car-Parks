@@ -25,6 +25,7 @@ dependencies {
     implementation libs.spring.boot.starter.web,
         libs.spring.boot.starter.actuator,
         libs.spring.boot.starter.data.jpa,
+        libs.spring.boot.starter.validation,
         libs.spring.cloud.open.feign,
         libs.liquibase.core,
         libs.postgresql,
