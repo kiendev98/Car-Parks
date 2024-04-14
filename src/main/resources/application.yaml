@@ -1,5 +1,8 @@
 spring.application.name: carpark-app
 
+server:
+  port: 8080
+
 logging:
   level:
     root: INFO
@@ -19,16 +22,40 @@ spring:
     url: jdbc:postgresql://localhost:5432/carpark
     username: carpark
     password: carpark@
+
+
   jpa:
     properties:
       hibernate:
-        open-in-view: false
         hbm2ddl:
           auto: validate
+    open-in-view: false
 
   liquibase:
     change-log: database/project_model.xml
     parameters:
       csvFilePath: classpath:/HDBCarparkInformation.csv
 
-spring.datasource.hikari.initializationFailTimeout: 60000
+  cache:
+    type: hazelcast
+
+  hazelcast:
+    config: classpath:hazelcast.xml
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+  datasource:
+    url: jdbc:postgresql://postgres:5432/carpark
+
+logging:
+  level:
+    root: WARN
+    com.wego: INFO
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+
+server:
+  port: 80

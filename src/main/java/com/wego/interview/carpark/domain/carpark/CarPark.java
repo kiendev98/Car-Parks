@@ -1,17 +1,15 @@
 package com.wego.interview.carpark.domain.carpark;
 
-import jakarta.annotation.Nonnull;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.locationtech.jts.geom.Point;
 
 @Entity
 @Table(name = "car_park")
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(toBuilder = true)

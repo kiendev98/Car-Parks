@@ -2,6 +2,7 @@ package com.wego.interview.carpark.client;
 
 import com.wego.interview.carpark.domain.available.AvailableCarPark;
 import com.wego.interview.carpark.domain.available.CarParkQueryService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -36,5 +37,6 @@ public interface SingaporeCarParkAvailabilityClient extends CarParkQueryService 
     }
 
     @GetMapping(value = "/transport/carpark-availability", consumes = "application/json")
+    @Cacheable(value = "availableCarParkCache", key = "#root.methodName")
     CarParkAvailabilityResponse fetchAvailableCarParks();
 }

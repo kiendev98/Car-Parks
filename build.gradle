@@ -28,10 +28,12 @@ dependencies {
     implementation libs.spring.boot.starter.web,
         libs.spring.boot.starter.actuator,
         libs.spring.boot.starter.data.jpa,
+        libs.spring.boot.starter.cache,
         libs.spring.boot.starter.validation,
         libs.spring.cloud.open.feign,
         libs.liquibase.core,
         libs.postgresql,
+        libs.hazelcast.spring,
         libs.jackson.csv,
         libs.hibernate.spatial
 
@@ -79,11 +81,28 @@ tasks.named("check") {
     dependsOn("integrationTest")
 }
 
+String imageTag = "carparks:$version"
+
+bootBuildImage {
+    builder = "paketobuildpacks/builder:base"
+    runImage = "paketobuildpacks/run:base-cnb"
+    imageName = imageTag
+}
+
+tasks.register("buildImage") {
+    dependsOn bootBuildImage
+}
+
 dockerCompose {
-    projectName = "carpark"
+    projectName = "carparks"
     captureContainersOutput = true
+    environment.put("SERVER_IMAGE", imageTag)
     postgres {
-        projectName = "carpark"
+        projectName = "carparks"
         startedServices = ['postgres']
     }
+}
+
+tasks.named("composeUp") {
+    dependsOn "buildImage"
 }

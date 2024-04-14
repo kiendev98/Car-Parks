@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hazelcast xmlns="http://www.hazelcast.com/schema/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.hazelcast.com/schema/config https://www.hazelcast.com/schema/config/hazelcast-config-5.4.xsd">
+
+    <instance-name>CarParks</instance-name>
+
+    <network>
+        <join>
+            <auto-detection enabled="false"/>
+            <multicast enabled="false"/>
+            <kubernetes enabled="false"/>
+            <gcp enabled="false"/>
+            <eureka enabled="false"/>
+        </join>
+    </network>
+
+    <map name="availableCarParkCache">
+        <time-to-live-seconds>60</time-to-live-seconds>
+        <eviction size="1" eviction-policy="LFU" max-size-policy="USED_HEAP_SIZE"/>
+    </map>
+</hazelcast>
