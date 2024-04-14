@@ -62,16 +62,21 @@ testing {
 
             dependencies {
                 implementation project()
-                implementation testLibs.spring.boot.starter.test
-                implementation testLibs.spring.boot.testcontainers
+                implementation libs.spring.boot.starter.web
                 implementation libs.spring.boot.starter.data.jpa
                 implementation libs.hibernate.spatial
+                implementation testLibs.spring.boot.starter.test
+                implementation testLibs.spring.boot.testcontainers
                 implementation testLibs.testcontainers.junit
                 implementation testLibs.testcontainers.postgresql
                 implementation testLibs.wiremock
             }
         }
     }
+}
+
+tasks.named("check") {
+    dependsOn("integrationTest")
 }
 
 dockerCompose {

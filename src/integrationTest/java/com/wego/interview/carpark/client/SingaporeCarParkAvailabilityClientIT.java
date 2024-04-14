@@ -1,41 +1,18 @@
 package com.wego.interview.carpark.client;
 
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.WireMock;
-import com.wego.interview.carpark.config.MockServerConfig;
+import com.wego.interview.carpark.BaseIntegrationTest;
 import com.wego.interview.carpark.domain.available.AvailableCarPark;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import wiremock.org.eclipse.jetty.http.HttpStatus;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.List;
 
-@SpringBootTest
-@ActiveProfiles("client_test")
-@ContextConfiguration(classes = { MockServerConfig.class })
-class SingaporeCarParkAvailabilityClientIT {
-
-    @Autowired
-    private WireMockServer wireMockServer;
+class SingaporeCarParkAvailabilityClientIT extends BaseIntegrationTest {
 
     @Autowired
     private SingaporeCarParkAvailabilityClient client;
-
-    @Autowired
-    private ResourceLoader resourceLoader;
-
-    @AfterEach
-    void cleanup() {
-        wireMockServer.resetAll();
-    }
 
     @Test
     void loadContext() {
@@ -43,9 +20,6 @@ class SingaporeCarParkAvailabilityClientIT {
 
     @Test
     void testFetchAvailableCarParks_shouldDeserializeResponseProperly() throws IOException {
-        // given
-        setupWireMock();
-
         // when
         CarParkAvailabilityResponse response = client.fetchAvailableCarParks();
 
@@ -67,9 +41,6 @@ class SingaporeCarParkAvailabilityClientIT {
 
     @Test
     void testFindAvailableCarParks() throws IOException {
-        // given
-        setupWireMock();
-
         // when
         List<AvailableCarPark> availableCarParks = client.findAvailableCarParks();
 
@@ -81,18 +52,5 @@ class SingaporeCarParkAvailabilityClientIT {
                 .get();
         Assertions.assertThat(A1CarPark.getTotalLots()).isEqualTo(105);
         Assertions.assertThat(A1CarPark.getAvailableLots()).isEqualTo(101);
-    }
-
-    private void setupWireMock() throws IOException {
-        wireMockServer.stubFor(
-                WireMock.get(WireMock.urlEqualTo("/transport/carpark-availability"))
-                        .willReturn(
-                                WireMock.aResponse()
-                                        .withStatus(HttpStatus.OK_200)
-                                        .withHeader("content-type", "application/json")
-                                        .withBody(resourceLoader.getResource("classpath:client/mockClientResponse.json").getContentAsString(Charset.defaultCharset()))
-                        )
-        );
-        wireMockServer.start();
     }
 }

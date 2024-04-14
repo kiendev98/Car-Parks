@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Repository
@@ -28,7 +29,7 @@ public class PostgisCarParkRepository implements CarParkRepository {
     @Override
     public List<CarPark> findNearestCarParksInIds(
             Coordinate coordinate,
-            List<String> carParkIds,
+            Set<String> carParkIds,
             NearestCarParkPage page
     ) {
 

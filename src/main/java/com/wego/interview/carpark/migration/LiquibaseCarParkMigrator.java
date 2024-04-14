@@ -51,20 +51,14 @@ public class LiquibaseCarParkMigrator implements CustomTaskChange, CustomTaskRol
 
 			JdbcConnection con = (JdbcConnection) database.getConnection();
 			PreparedStatement prepareStatement = con.prepareStatement(
-				"insert into car_park (id, address, location) values (?, ?, ST_GeomFromText(?, 4326))"
+				"insert into car_park (id, address, location) values (?, ?, st_setsrid(st_makepoint(?, ?), 4326))"
 			);
 
 			for (CarPark carPark : carParks) {
 				prepareStatement.setString(1, carPark.getId());
 				prepareStatement.setString(2, carPark.getAddress());
-				prepareStatement.setString(
-						3,
-						String.format(
-								"POINT(%f %f)",
-								carPark.getLocation().getX(),
-								carPark.getLocation().getY()
-						)
-				);
+				prepareStatement.setDouble(3, carPark.getLocation().getX());
+				prepareStatement.setDouble(4, carPark.getLocation().getY());
 
 				prepareStatement.addBatch();
 			}
