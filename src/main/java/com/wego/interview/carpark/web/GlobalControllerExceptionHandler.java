@@ -18,7 +18,7 @@ public class GlobalControllerExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidInputException.class)
     public HttpErrorInfo handleInvalidInputException(HttpServletRequest request, InvalidInputException exception) {
-        String path = request.getPathInfo();
+        String path = request.getRequestURI();
         String message = exception.getMessage();
         log.debug("Returning HTTP status: {} for path: {}, message: {}", HttpStatus.BAD_REQUEST, path, message);
         return new HttpErrorInfo(

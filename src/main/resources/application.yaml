@@ -8,6 +8,13 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
 spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          carpark:
+            url: "https://api.data.gov.sg/v1"
+
   datasource:
     url: jdbc:postgresql://localhost:5432/carpark
     username: carpark
