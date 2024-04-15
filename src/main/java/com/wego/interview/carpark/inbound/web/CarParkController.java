@@ -21,7 +21,7 @@ public class CarParkController {
     private final CarParkService carParkService;
 
     @GetMapping("/nearest")
-    public List<NearestCarPark> findNearestCarPark(
+    public List<NearestCarPark> findNearestCarParks(
             // We handle input validation our self, marking it non-required to bypass Spring validation.
             @RequestParam(value = "latitude", required = false) Double latitude,
             @RequestParam(value = "longitude", required = false) Double longitude,

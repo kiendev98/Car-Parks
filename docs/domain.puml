@@ -2,13 +2,13 @@
 class CarPark {
     String id
     String address
-    Coordinate coordinate
+    Point location
 }
 
-class Coordinate {
-    double longitude
-    double latitude
+class Point {
+    double x; // longitude
+    double y; // latitude
 }
 
-CarPark --* Coordinate
+CarPark --* Point
 @enduml

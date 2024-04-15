@@ -25,11 +25,11 @@ necessary tools before building the project.
 
 To wrap up, the following tools are:
 
-| Tool                 | Version      | Note                                                                  |
-|----------------------|--------------|-----------------------------------------------------------------------|
-| [Docker]<sup>1</sup> | '>=20.x'     |                                                                       |
-| [Gradle]             | '>=7.6.x <8' | Optional, Gradle Wrapper <sup>2</sup> can be used instead.            |
-| [JDK]                | '17'         | Optional, Gradle Tool Chains <sup>3</sup> plugin can be used instead. |
+| Tool                 | Version  | Note                                                                  |
+|----------------------|----------|-----------------------------------------------------------------------|
+| [Docker]<sup>1</sup> | '>=20.x' |                                                                       |
+| [Gradle]             | '>=8.x'  | Optional, Gradle Wrapper <sup>2</sup> can be used instead.            |
+| [JDK]                | '17'     | Optional, Gradle Tool Chains <sup>3</sup> plugin can be used instead. |
 
 
 <sup>2</sup>) [Gradle Wrapper] allows you to skip the Gradle installation. 
@@ -75,6 +75,24 @@ To compose a single postgis container:
 `./gradlew postgresComposeUp`
 
 >**NOTE**: If you wish to run the project with Intellj, make sure that the postgis container is up first.
+ 
+## Framework & Library
+
+Web Framework: [Spring Boot Web MVC](https://docs.spring.io/spring-framework/reference/web/webmvc.html)
+
+ORM: [Hibernate](https://hibernate.org/)
+
+Migration: [Liquibase](https://www.liquibase.com/community)
+
+Caching: [Hazelcast](https://hazelcast.com/)
+
+Http Client: [Open Feign](https://github.com/OpenFeign/feign)
+
+Testing: [Junit Jupiter](https://junit.org/junit5/docs/current/user-guide/)
+
+Test Containers: [Test Container](https://testcontainers.com/)
+
+Mock Server: [Wire Mock](https://wiremock.org/)
 
 <!--- References --->
 [Docker]: https://hub.docker.com/

@@ -1,77 +1,66 @@
 @startuml system_design
 top to bottom direction
-
-frame "domain" {
-    !include domain.puml
-}
-
-frame "data transfer object" {
-    class CarParkAvailability
-    class NearestCarParkResponse
-}
+allowmixing
 
 frame "data migration" {
     class LiquibaseCarParkMigrator {
         + void execute()
     }
 
-
-    class LatLonCoordinateConvert {
+    class LatLonCoordinate {
         + LatLonCoordinate computeSVY21(SVY21Coordinate svy21)
     }
+
+    file cvsFile
 }
 
-frame "system interaction" {
-    class CarParkController {
-        + List<NearestCarParkResponse> findNearestCarParks(Coordinate coordinate, Pageable  pageable)
+frame "system" {
+    frame "inbound" {
+        class CarParkController {
+            + List<NearestCarPark> findNearestCarParks(Double latitude, Double longitude, Integer page, Integer pageSize)
+        }
     }
 
-    interface CarParkService {
-        + List<CarPark> findNearestCarParks(Coordinate coordinate, Pageable pageable)
-        + List<CarPark> saveCarParks(CarPark carParks)
+    frame "domain" {
+        !include domain.puml
+        class CarParkService {
+            + List<NearestCarPark> findNearestAvailableCarParks(Coordinate coordinate)
+            + List<NearestCarPark> findNearestAvailableCarParks(Coordinate coordinate, NearestCarParkPage page)
+        }
+
+        interface CarParkRepository {
+            + List<CarPark> findNearestCarParksInIds(\n\tCoordinate coordinate, \n\tSet<String> findNearestCarParksInIds, \n\tNearestCarParkPage page\n)
+        }
+
+        interface CarParkQueryService{
+            + List<AvailableCarPark> findAvailableCarParks();
+        }
     }
 
-    class DefaultCarParkService {
-        + List<CarPark> findNearestCarParks(Coordinate coordinate, Pageable pageable)
-        + List<CarPark> saveCarParks(CarPark carParks)
-    }
+    frame "outbound" {
+        frame "client" {
+            class SingaporeCarParkAvailabilityClient {
+                List<AvailableCarPark> findAvailableCarParks()
+            }
+        }
 
-    interface CarParkRepository {
-        + List<CarPark> findByIds(List<String> ids)
-        + List<CarPark> saveAll(List<CarPark> carParks)
-    }
-
-    class SpringJpaCarParkRepository {
-        + List<CarPark> findByIds(List<String> ids)
-        + List<CarPark> saveAll(List<CarPark> carParks)
-    }
-
-    interface DistanceComputer {
-        + double computeInMeter(Coordinate from, Coordinate to)
-    }
-
-
-    interface CarParkAvailabilityClient {
-        + CarParkAvailability fetchAvailabilityCarPark();
-    }
-
-    class SingaporeCarParkAvailabilityClient  {
-        + CarParkAvailability fetchAvailabilityCarPark();
-    }
-
-    class EquirectangularDistanceComputer {
-        + double computeInMeter(Coordinate from, Coordinate to)
+        frame "persistence" {
+            class PostgisCarParkRepository {
+                List<CarPark> findNearestCarParksInIds()
+            }
+        }
     }
 }
 
+database "PostgisDataBase" as db
 
 CarParkController --* CarParkService
-CarParkService <|-- DefaultCarParkService
-DefaultCarParkService --* CarParkRepository
-DefaultCarParkService --* CarParkAvailabilityClient
-DefaultCarParkService --* DistanceComputer
-DistanceComputer <|-- EquirectangularDistanceComputer
-CarParkRepository <|-- SpringJpaCarParkRepository
-CarParkAvailabilityClient <|-- SingaporeCarParkAvailabilityClient
-LiquibaseCarParkMigrator --* LatLonCoordinateConvert
+CarParkService --* CarParkQueryService
+CarParkService --* CarParkRepository
+CarParkRepository <|-- PostgisCarParkRepository
+CarParkQueryService <|-- SingaporeCarParkAvailabilityClient
+LiquibaseCarParkMigrator --* LatLonCoordinate
+LiquibaseCarParkMigrator --> db: <<import data>>
+PostgisCarParkRepository --> db: <<query data>>
+LiquibaseCarParkMigrator --> cvsFile: <<read data>>
 @enduml
