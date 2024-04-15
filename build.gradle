@@ -8,10 +8,6 @@ plugins {
     alias(gradlePluginLibs.plugins.docker.compose)
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-}
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -20,6 +16,13 @@ configurations {
 
 repositories {
     mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+        vendor = JvmVendorSpec.ADOPTIUM
+    }
 }
 
 
@@ -84,8 +87,7 @@ tasks.named("check") {
 String imageTag = "carparks:$version"
 
 bootBuildImage {
-    builder = "paketobuildpacks/builder:base"
-    runImage = "paketobuildpacks/run:base-cnb"
+    environment["BP_JVM_VERSION"] = "21"
     imageName = imageTag
 }
 
