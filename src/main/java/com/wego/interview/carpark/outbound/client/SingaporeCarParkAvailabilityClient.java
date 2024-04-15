@@ -1,4 +1,4 @@
-package com.wego.interview.carpark.client;
+package com.wego.interview.carpark.outbound.client;
 
 import com.wego.interview.carpark.domain.available.AvailableCarPark;
 import com.wego.interview.carpark.domain.available.CarParkQueryService;

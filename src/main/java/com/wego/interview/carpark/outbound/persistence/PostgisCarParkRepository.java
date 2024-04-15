@@ -1,4 +1,4 @@
-package com.wego.interview.carpark.persistence;
+package com.wego.interview.carpark.outbound.persistence;
 
 import com.wego.interview.carpark.domain.carpark.CarPark;
 import com.wego.interview.carpark.domain.carpark.CarParkRepository;

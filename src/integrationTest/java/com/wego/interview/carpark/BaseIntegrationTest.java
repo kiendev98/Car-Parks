@@ -1,6 +1,7 @@
 package com.wego.interview.carpark;
 
-import com.wego.interview.carpark.config.AvailableCarParkMockServerConfig;
+import com.wego.interview.carpark.CarParkApplication;
+import com.wego.interview.carpark.outbound.client.AvailableCarParkMockServerConfig;
 import com.wego.interview.carpark.domain.carpark.CarPark;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -38,7 +39,7 @@ public class BaseIntegrationTest {
     private final GeometryFactory geometryFactory = new GeometryFactory();
 
     @BeforeEach
-    void clearData() {
+    public void clearData() {
         entityManager.createNativeQuery("delete from car_park")
                 .executeUpdate();
     }

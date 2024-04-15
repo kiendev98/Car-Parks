@@ -1,4 +1,4 @@
-package com.wego.interview.carpark.client;
+package com.wego.interview.carpark.outbound.client;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

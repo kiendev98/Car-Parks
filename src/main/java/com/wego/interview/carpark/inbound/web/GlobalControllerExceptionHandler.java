@@ -1,4 +1,4 @@
-package com.wego.interview.carpark.web;
+package com.wego.interview.carpark.inbound.web;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;

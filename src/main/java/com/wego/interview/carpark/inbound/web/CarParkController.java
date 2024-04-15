@@ -1,4 +1,4 @@
-package com.wego.interview.carpark.web;
+package com.wego.interview.carpark.inbound.web;
 
 import com.wego.interview.carpark.domain.carpark.CarParkService;
 import com.wego.interview.carpark.domain.carpark.NearestCarPark;

@@ -1,5 +1,6 @@
-package com.wego.interview.carpark;
+package com.wego.interview.carpark.inbound.web;
 
+import com.wego.interview.carpark.BaseIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -14,7 +15,7 @@ import java.util.Map;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-class CarParkApplicationIT extends BaseIntegrationTest {
+class CarParkControllerIT extends BaseIntegrationTest {
 
     private MockMvc client;
 

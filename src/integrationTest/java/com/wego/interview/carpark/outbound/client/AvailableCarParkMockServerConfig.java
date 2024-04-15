@@ -1,4 +1,4 @@
-package com.wego.interview.carpark.config;
+package com.wego.interview.carpark.outbound.client;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
