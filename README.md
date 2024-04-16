@@ -25,16 +25,16 @@ necessary tools before building the project.
 
 To wrap up, the following tools are:
 
-| Tool                 | Version  | Note                                                                  |
-|----------------------|----------|-----------------------------------------------------------------------|
-| [Docker]<sup>1</sup> | '>=20.x' |                                                                       |
-| [Gradle]             | '>=8.x'  | Optional, Gradle Wrapper <sup>2</sup> can be used instead.            |
-| [JDK]                | '17'     | Optional, Gradle Tool Chains <sup>3</sup> plugin can be used instead. |
+| Tool     | Version  | Note                                                                  |
+|----------|----------|-----------------------------------------------------------------------|
+| [Docker] | '>=20.x' |                                                                       |
+| [Gradle] | '>=8.x'  | Optional, Gradle Wrapper <sup>1</sup> can be used instead.            |
+| [JDK]    | '17'     | Optional, Gradle Tool Chains <sup>2</sup> plugin can be used instead. |
 
 
-<sup>2</sup>) [Gradle Wrapper] allows you to skip the Gradle installation. 
+<sup>1</sup>) [Gradle Wrapper] allows you to skip the Gradle installation. 
 
-<sup>3</sup>) [Gradle Tool Chains] allows you to skip the JDK installation.
+<sup>2</sup>) [Gradle Tool Chains] allows you to skip the JDK installation.
 
 ## Quickstart
 Assuming you went through the documentation, your environment is set up and project is prepared, this is the most straightforward way to get your project application up and running:
