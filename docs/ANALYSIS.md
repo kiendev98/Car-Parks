@@ -56,26 +56,21 @@ Here we follow the basic [Hexagonal architecture](https://en.wikipedia.org/wiki/
 
 #### Persistence Adapter: `PostgisCarParkRepository`
 
-Since domain model `CarPark` contains geospatial  data. It's reasonable to pick the DBMS that supports storing, indexing,
-and querying geospatial data.
+Since domain model `CarPark` contains geospatial  data. It's reasonable to pick the DBMS that supports storing, indexing, and querying geospatial data.
 
 In this application, we will use Postgres database with [Postgis](https://postgis.net/) extension.
 
-For our business case, to find out the nearest car parks with a specific coordinate as input. We will apply the 
-[Nearest-Neighbour Searching](https://postgis.net/workshops/postgis-intro/knn.html) computation that Postgis supports out 
-of the box.
+For our business case, to find out the nearest car parks with a specific coordinate as input. We will apply the [Nearest-Neighbour Searching](https://postgis.net/workshops/postgis-intro/knn.html) computation that Postgis supports out of the box.
 
-The idea is simple: `Given a coordinate then compute all distances between this coordinate and other stored locations 
-in database then sort it by ascending order.`
+The idea is simple: `Given a coordinate then compute all distances between this coordinate and other stored locations in database then sort it by ascending order.`
 
 #### Client Adapter: `SingaporeCarParkAvailabilityClient`
 
-Since the operation `findNearestCarParks()` serves real-time data for customer, and it also queries a large volume of data from external source,
-this could be a bottleneck of the application when it comes to performance topic.
+Since the operation `findNearestCarParks()` serves real-time data for customer, and it also queries a large volume of data from external source, this could be a bottleneck of the application when it comes to performance topic.
 
 **Cache `SingaporeCarParkAvailabilityClient#findAvailableCarParks()` query.**
 
 This is a query, data consistency would not be a problem here. It's reasonable to cache this query.
 
 Base on the recommendation from the [car parks availability datasource](https://beta.data.gov.sg/collections/85/view) website,
-`1 minutes` cache expiration would be a good setting.
+`1 minute` cache expiration would be a good setting.

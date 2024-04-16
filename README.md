@@ -29,7 +29,7 @@ To wrap up, the following tools are:
 |----------|----------|-----------------------------------------------------------------------|
 | [Docker] | '>=20.x' |                                                                       |
 | [Gradle] | '>=8.x'  | Optional, Gradle Wrapper <sup>1</sup> can be used instead.            |
-| [JDK]    | '17'     | Optional, Gradle Tool Chains <sup>2</sup> plugin can be used instead. |
+| [JDK]    | '21'     | Optional, Gradle Tool Chains <sup>2</sup> plugin can be used instead. |
 
 
 <sup>1</sup>) [Gradle Wrapper] allows you to skip the Gradle installation. 
