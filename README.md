@@ -1,8 +1,8 @@
 # Kien Trung Tran - Wego Interview
 
-## Assignment
+## Overview
 
-For more details, please read it at [pdf](./Senior%20Software%20Engineer%20Coding%20Exercise.pdf) file.
+Find nearest car parks from the given latitude and longitude. 
 
 ## Documentation
 
