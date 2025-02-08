@@ -2,7 +2,7 @@
 
 ## Requirements
 
-* For requirements, please read the [pdf](Senior%20Software%20Engineer%20Coding%20Exercise.pdf)
+* The system should provide an API to find the nearest car parks based on the given coordinate.
 
 ## Design
 
